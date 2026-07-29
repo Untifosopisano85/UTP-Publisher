@@ -10,6 +10,16 @@ class Reel:
     hashtags: list[str] = field(default_factory=list)
     thumbnail: Path | None = None
 
+    # Nuovo:
+    # piattaforme di pubblicazione
+    platforms: list[str] = field(
+        default_factory=lambda: [
+            "facebook",
+            "instagram",
+        ]
+    )
+
+
     @classmethod
     def from_file(cls, filename: str, **kwargs):
         return cls(
@@ -17,12 +27,15 @@ class Reel:
             **kwargs,
         )
 
+
     @property
     def exists(self):
         return self.video.exists()
 
+
     @property
     def full_description(self):
+
         if not self.hashtags:
             return self.description
 

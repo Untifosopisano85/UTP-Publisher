@@ -1,0 +1,10 @@
+from connectors.meta.config import (
+    CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET,
+)
+
+
+print("CLOUD:", CLOUDINARY_CLOUD_NAME)
+print("KEY:", CLOUDINARY_API_KEY)
+print("SECRET:", CLOUDINARY_API_SECRET[:5] if CLOUDINARY_API_SECRET else None)

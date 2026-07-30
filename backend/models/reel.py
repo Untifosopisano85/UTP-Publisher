@@ -4,14 +4,9 @@ from pathlib import Path
 
 @dataclass(slots=True)
 class Reel:
-    video: Path
-    title: str = ""
-    description: str = ""
-    hashtags: list[str] = field(default_factory=list)
-    thumbnail: Path | None = None
 
-    # Nuovo:
-    # piattaforme di pubblicazione
+    video: Path
+
     platforms: list[str] = field(
         default_factory=lambda: [
             "facebook",
@@ -19,32 +14,45 @@ class Reel:
         ]
     )
 
+    contents: dict = field(
+        default_factory=dict
+    )
+
+    thumbnail: Path | None = None
+
+    title: str = ""
+
+    full_description: str = ""
+
+
 
     @classmethod
-    def from_file(cls, filename: str, **kwargs):
+    def from_file(
+        cls,
+        filename: str,
+        **kwargs
+    ):
+
         return cls(
             video=Path(filename),
             **kwargs,
         )
 
 
+
     @property
     def exists(self):
+
         return self.video.exists()
 
 
-    @property
-    def full_description(self):
 
-        if not self.hashtags:
-            return self.description
+    def get_content(
+        self,
+        platform: str
+    ):
 
-        tags = " ".join(
-            f"#{tag.lstrip('#')}"
-            for tag in self.hashtags
+        return self.contents.get(
+            platform,
+            {}
         )
-
-        if self.description:
-            return f"{self.description}\n\n{tags}"
-
-        return tags

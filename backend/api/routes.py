@@ -29,6 +29,7 @@ async def health():
 
 
 
+
 @router.post(
     "/publish/reel",
     dependencies=[
@@ -36,12 +37,22 @@ async def health():
     ]
 )
 async def publish_reel(
+
     video: UploadFile = File(...),
-    title: str = Form(""),
-    description: str = Form(""),
+
+    # FACEBOOK
+    facebook_title: str = Form(""),
+    facebook_description: str = Form(""),
+
+
+    # INSTAGRAM
+    instagram_title: str = Form(""),
+    instagram_description: str = Form(""),
+
 
     facebook: bool = Form(True),
     instagram: bool = Form(True),
+
 ):
 
 
@@ -77,7 +88,7 @@ async def publish_reel(
 
 
     # -----------------------------
-    # SALVATAGGIO VIDEO TEMPORANEO
+    # SALVATAGGIO VIDEO
     # -----------------------------
 
     file_path = f"/tmp/{video.filename}"
@@ -120,9 +131,8 @@ async def publish_reel(
 
             "message": "Errore caricamento video",
 
-            "platforms": {},
-
             "error": str(e),
+
         }
 
 
@@ -135,11 +145,30 @@ async def publish_reel(
 
         video=file_path,
 
-        title=title,
-
-        description=description,
-
         platforms=selected_platforms,
+
+
+        contents={
+
+            "facebook": {
+
+                "title": facebook_title,
+
+                "description": facebook_description,
+
+            },
+
+
+            "instagram": {
+
+                "title": instagram_title,
+
+                "description": instagram_description,
+
+            },
+
+        },
+
     )
 
 
@@ -149,6 +178,7 @@ async def publish_reel(
     # -----------------------------
 
     if facebook:
+
 
         try:
 
@@ -162,10 +192,12 @@ async def publish_reel(
                 "status": "published",
 
                 "data": facebook_result,
+
             }
 
 
         except Exception as e:
+
 
             result["status"] = "partial"
 
@@ -175,7 +207,9 @@ async def publish_reel(
                 "status": "error",
 
                 "message": str(e),
+
             }
+
 
 
     else:
@@ -183,6 +217,7 @@ async def publish_reel(
         result["facebook"] = {
 
             "status": "not_selected"
+
         }
 
 
@@ -194,11 +229,19 @@ async def publish_reel(
 
     if instagram:
 
+
         try:
 
             instagram_result = publisher.publish_instagram_reel(
+
                 video_url=result["cloudinary"]["url"],
-                caption=reel.full_description,
+
+                caption=(
+                    instagram_title
+                    + "\n\n"
+                    + instagram_description
+                ),
+
             )
 
 
@@ -207,10 +250,12 @@ async def publish_reel(
                 "status": "published",
 
                 "data": instagram_result,
+
             }
 
 
         except Exception as e:
+
 
             result["status"] = "partial"
 
@@ -220,7 +265,9 @@ async def publish_reel(
                 "status": "error",
 
                 "message": str(e),
+
             }
+
 
 
     else:
@@ -228,13 +275,14 @@ async def publish_reel(
         result["instagram"] = {
 
             "status": "not_selected"
+
         }
 
 
 
 
     # -----------------------------
-    # RISPOSTA PER CLIENT MOBILE
+    # RISPOSTA MOBILE
     # -----------------------------
 
     return {
@@ -248,6 +296,7 @@ async def publish_reel(
             if result["status"] == "completed"
 
             else "Pubblicazione completata con errori"
+
         ),
 
 
@@ -256,6 +305,7 @@ async def publish_reel(
             "facebook": result["facebook"]["status"],
 
             "instagram": result["instagram"]["status"],
+
         },
 
     }

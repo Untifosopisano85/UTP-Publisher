@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>UTP Publisher</title>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    background:#111;
+    color:white;
+    padding:40px;
+}
+
+.box {
+    max-width:500px;
+    margin:auto;
+    background:#222;
+    padding:30px;
+    border-radius:15px;
+}
+
+h1 {
+    text-align:center;
+}
+
+input, textarea {
+    width:100%;
+    margin-top:10px;
+    margin-bottom:20px;
+    padding:10px;
+}
+
+button {
+    width:100%;
+    padding:15px;
+    background:#007bff;
+    color:white;
+    border:0;
+    border-radius:8px;
+    font-size:18px;
+}
+
+.social {
+    margin-bottom:20px;
+}
+
+#result {
+    margin-top:20px;
+    color:#4cff4c;
+    display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="box">
+
+<h1>
+UTP Publisher
+</h1>
+
+<p>
+Un Tifoso Pisano <br>    
+Gestione pubblicazione contenuti social
+</p>
+
+
+<label>
+Video
+</label>
+
+<input type="file">
+
+
+<label>
+Titolo
+</label>
+
+<input 
+type="text"
+value="Nuovo video Un Tifoso Pisano">
+
+
+<label>
+Descrizione
+</label>
+
+<textarea>
+Forza Pisa! Nuovo contenuto nerazzurro.
+</textarea>
+
+
+
+<div class="social">
+
+<b>Pubblica su:</b><br><br>
+
+☑ Facebook<br>
+☑ Instagram<br>
+☑ YouTube Shorts<br>
+☑ TikTok
+
+</div>
+
+
+<button onclick="publish()">
+PUBBLICA CONTENUTO
+</button>
+
+
+<div id="result">
+
+✅ Pubblicazione completata
+
+<br><br>
+
+TikTok: pubblicazione completata
+
+</div>
+
+
+</div>
+
+
+<script>
+
+function publish(){
+
+document.getElementById(
+"result"
+).style.display="block";
+
+}
+
+</script>
+
+
+</body>
+</html>

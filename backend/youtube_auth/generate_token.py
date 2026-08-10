@@ -7,7 +7,7 @@ SCOPES = [
 ]
 
 
-CLIENT_SECRETS_FILE = "client_secret.json"
+CLIENT_SECRETS_FILE = "youtube_auth/client_secret.json"
 
 
 

@@ -9,13 +9,11 @@ from connectors.youtube.client import YouTubeClient
 class YouTubeUploader:
 
 
-
     def __init__(self):
 
         self.client = YouTubeClient()
 
         self.youtube = self.client.youtube
-
 
 
 
@@ -30,6 +28,14 @@ class YouTubeUploader:
         description: str,
 
     ):
+
+
+        # Aggiunge automaticamente il tag Shorts
+
+        if "#Shorts" not in description:
+
+            description += "\n\n#Shorts"
+
 
 
         body = {
@@ -57,15 +63,15 @@ class YouTubeUploader:
 
         media = MediaFileUpload(
 
-            video_path,
+    video_path,
 
-            chunksize=-1,
+    chunksize=-1,
 
-            resumable=True,
+    resumable=True,
 
-            mimetype="video/*",
+    mimetype="video/mp4",
 
-        )
+)
 
 
 
@@ -80,7 +86,9 @@ class YouTubeUploader:
         )
 
 
+
         response = request.execute()
+
 
 
         return {

@@ -8,9 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent
 ENV_FILE = BASE_DIR / ".env"
 
 load_dotenv(
-    ENV_FILE
+    ENV_FILE,
+    override=True
 )
-
 
 # META
 

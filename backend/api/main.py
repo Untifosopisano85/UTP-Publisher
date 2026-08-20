@@ -103,9 +103,10 @@ def publish(
     request: PublishRequest
 ):
 
-print("PASSWORD ENV PRESENTE:", os.getenv("UTP_PUBLISH_PASSWORD") is not None)
-print("LUNGHEZZA PASSWORD ENV:", len(os.getenv("UTP_PUBLISH_PASSWORD", "")))
-print("LUNGHEZZA PASSWORD RICEVUTA:", len(request.password))
+    print("PASSWORD ENV PRESENTE:", os.getenv("UTP_PUBLISH_PASSWORD") is not None)
+    print("LUNGHEZZA PASSWORD ENV:", len(os.getenv("UTP_PUBLISH_PASSWORD", "")))
+    print("LUNGHEZZA PASSWORD RICEVUTA:", len(request.password))
+
 
     if request.password != os.getenv("UTP_PUBLISH_PASSWORD"):
 
@@ -113,6 +114,7 @@ print("LUNGHEZZA PASSWORD RICEVUTA:", len(request.password))
 
             "error": "Password non valida"
 
+        
         }
 
 

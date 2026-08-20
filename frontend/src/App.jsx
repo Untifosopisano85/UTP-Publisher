@@ -15,6 +15,7 @@ function App() {
 
   const [instagram, setInstagram] = useState("")
 
+  const [password, setPassword] = useState("")
 
   const [platforms, setPlatforms] = useState([
     "youtube",
@@ -114,6 +115,8 @@ function App() {
 
           platforms: platforms,
 
+          password: password,
+
           youtube_title: title,
 
           youtube_description: description,
@@ -121,6 +124,7 @@ function App() {
           facebook_message: facebook,
 
           instagram_caption: instagram
+
 
         })
 
@@ -347,7 +351,19 @@ function App() {
 
 
 
+      <input
 
+        type="password"
+
+        placeholder="Password pubblicazione"
+
+        value={password}
+
+        onChange={
+          (e) => setPassword(e.target.value)
+        }
+
+      />
 
       <button
 

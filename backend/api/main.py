@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 import shutil
+import os
 
 from api.schemas import PublishRequest
 
@@ -102,6 +103,15 @@ def publish(
     request: PublishRequest
 ):
 
+    if request.password != os.getenv("UTP_PUBLISH_PASSWORD"):
+
+        return {
+
+            "error": "Password non valida"
+
+        }
+
+
     publication = Publication(
 
         video_path=request.video_path,
@@ -143,7 +153,7 @@ def publications():
 
     history = PublicationHistory()
 
-    return history.all()
+    return history.get_all()
 
 
 @app.get("/publications/{publication_id}")
@@ -153,4 +163,4 @@ def publication_detail(
 
     history = PublicationHistory()
 
-    return history.get(publication_id)
+    return history.get_by_id(publication_id)

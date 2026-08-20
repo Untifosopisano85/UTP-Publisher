@@ -7,6 +7,7 @@ class PublishRequest(BaseModel):
 
     platforms: list[str]
 
+    password: str
 
     youtube_title: str = ""
 
